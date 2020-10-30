@@ -8,7 +8,7 @@ export default class extends React.Component{
         //year,month day는 서브밋할때 마다 업데이트
         year: day.getFullYear(),
         month:day.getMonth()+1,
-        day:day.getDate(), 
+        day:null,
         yearArray:[],
         monthArray:[1,2,3,4,5,6,7,8,9,10,11,12],
         dayArray:[],
@@ -69,8 +69,7 @@ export default class extends React.Component{
 
      componentDidMount(){
         //마지막 날짜 구하기 
-        const{ year,month,yearArray,dayArray,startIndex}=this.state;
-        
+        const{ year,month,day,yearArray,dayArray,startIndex}=this.state;
         const newStartIndex=new Date(year,month-1,1).getDay();
 
         
@@ -88,8 +87,7 @@ export default class extends React.Component{
         // 날짜도 포함되야 한다.
 
         const ThisMonth = new Date(year,month,0).getDay();
-        
-
+      
 
         for(let i=2000; i<=year; i++){
             yearArray.push(i);   
@@ -111,9 +109,10 @@ export default class extends React.Component{
         for(let i=1; i<(6-ThisMonth)+1; i++){
             dayArray.push(i);
         }
+       
 
         
-        this.setState({yearArray,dayArray,startIndex:newStartIndex});
+        this.setState({yearArray,dayArray,day:lastDay,startIndex:newStartIndex});
     }
 
 

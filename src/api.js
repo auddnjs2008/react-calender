@@ -1,15 +1,23 @@
 import axios from "axios";
 
 
-const webSite ="https://api.nasa.gov/planetary/apod";
+const webSite ="https://api.nasa.gov/planetary";
 
 
-const api =async (date) => await axios.create({
-    url:webSite,
+const api = axios.create({
+    baseURL:webSite,
     params:{
-        api_key:process.env.API_KEY,
-        date //YYYY-MM-DD 형식으로 써야 한다. 
+        api_key:"5gJf5VSdXaY3pad7Q3bPOzgSRV5MqFyfD0LC1wig",
     }
 })
+
+
+export const getImages={
+    images:(date)=> api.get("apod",{
+        params:{
+            date
+        }
+    })
+}
 
 export default api;

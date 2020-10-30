@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 import Day from "../../components/Day";
+import { getImages } from "../../api";
 
 
 const Container = styled.div``; // 전체 감싸는 상자.
@@ -9,42 +10,84 @@ const Container = styled.div``; // 전체 감싸는 상자.
 const Header = styled.ul`
     list-style:none;
 `; // 날짜셋팅 - 연도, 달, 일 세팅창
-const Form = styled.form`
+const Wrapper = styled.div`
+    width:200px;
+    margin: 0 auto;
     display:flex;
     justify-content:space-between;
 `;
-const Year = styled.li``;
-const Month = styled.li``;
+const Year = styled.li`
+    select{
+    border:none;
+    border:2px solid #ff7979;
+    outline:none;
+    width:80px;
+    height:50px;
+    font-size:20px;
+    }
 
-const GridWrapper = styled.div``; //달력을 나타내는 곳
+`;
+const Month = styled.li`
+ select{
+    border:none;
+    border:2px solid #ff7979;
+    outline:none;
+    width:80px;
+    height:50px;
+    font-size:20px;
+    }`;
+
+const Navigator=styled.div`
+    width:100%;
+    display:grid;
+    grid-template-columns:repeat(7,1fr);
+    justify-items:center;
+    margin-bottom:20px;
+`;
+const GridWrapper = styled.div`
+    width:100%;
+    height:100vh;
+    display:grid;
+    grid-template-columns:repeat(7,1fr);
+    gap:5px;
+
+`; //달력을 나타내는 곳
 
 
 
-const Homepresenter =({year,month,day,yearArray,monthArray,dayArray})=> 
+const Homepresenter =({year,month,day,yearArray,monthArray,dayArray,startIndex,handleChange})=> 
 <Container>
     <Header>
-        <Form>
+        <Wrapper>
             <Year>
-                <select name="year">
+                <select name="year" onChange={handleChange}>
                     {yearArray.map(Ayear=>
                     Ayear === year ? <option value={Ayear} selected>{Ayear}</option>
                     :<option value={Ayear}>{Ayear}</option>)}
                 </select>
             </Year>
             <Month>
-                <select name="month">
+                <select name="month" onChange={handleChange}>
                     {monthArray.map(Amonth=>
                     Amonth === month ?
                     <option value={Amonth} selected>{Amonth}</option>:
                     <option value={Amonth}>{Amonth}</option>)}
                 </select>
             </Month>
-         
-            <input type="submit" value="Submit"/>
-        </Form>
+        </Wrapper>
     </Header>
+    <Navigator>
+        <div>일</div>
+        <div>월</div>
+        <div>화</div>
+        <div>수</div>
+        <div>목</div>
+        <div>금</div>
+        <div>토</div>
+    </Navigator>
+   
     <GridWrapper>
-                        
+       {dayArray.map( (item,index)=> <Day apiKey={index >=startIndex && index<=startIndex+day-1 ? `${year}-${month}-${item}`:""}  day={item} color={index >=startIndex && index<=startIndex+day-1 ? "true" :"false"}></Day>)}                 
     </GridWrapper>
 </Container>
 
@@ -54,7 +97,9 @@ Homepresenter.propTypes={
     day:PropTypes.number,
     yearArray:PropTypes.array,
     monthArray:PropTypes.array,
-    dayArray:PropTypes.array
+    dayArray:PropTypes.array,
+    startIndex:PropTypes.number,
+    handleChange:PropTypes.func,
 }
 
 

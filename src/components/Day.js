@@ -6,9 +6,10 @@ import api, { getImages } from "../api";
 
 
 const Container = styled(Link)`
-  background-color:${props=>props.color==="true" ? "#7f8c8d" :"#ecf0f1"};
+  background-color:${props=>props.color==="true" ? "#34495e" :"#95a5a6"};
   color:${props=>props.color==="true" ? "white" :"black"};
   text-decoration:none;
+  padding:5px;
   &:hover{
       transform:scale(1.05,1.05);
   }
@@ -17,7 +18,8 @@ const Container = styled(Link)`
 const ImageWrapper = styled.div`
 `;
 const Number=styled.div`
-
+    font-size:18px;
+    
 `;
 const Day=({apiKey,day,color}) => 
     <Container to={`/${apiKey}`}color={color}>

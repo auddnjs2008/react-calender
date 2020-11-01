@@ -43,6 +43,8 @@ const Navigator=styled.div`
     grid-template-columns:repeat(7,1fr);
     justify-items:center;
     margin-bottom:20px;
+    font-size:18px;
+    color:#fa983a;
 `;
 const GridWrapper = styled.div`
     width:100%;

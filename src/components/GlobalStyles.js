@@ -10,6 +10,10 @@ const GlobalStyles = createGlobalStyle`
    p{
        font-size:18px;
    }
+   body{
+        width:100vw;
+        height:100vh;
+   }
 `;
 
 export default GlobalStyles;

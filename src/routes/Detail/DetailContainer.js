@@ -28,8 +28,11 @@ export default class extends React.Component{
       
     }
 
-    handleDelClick =()=>{
-        console.log("lalal");
+    handleDelClick =(e)=>{
+        const{parentNode:{innerText}} =e.target;
+        const number=parseInt(innerText.split(".")[0]);
+        const newPlans = this.state.planList.filter((item,index)=>index !== number-1);
+        this.setState({planList:newPlans});        
     }
 
 

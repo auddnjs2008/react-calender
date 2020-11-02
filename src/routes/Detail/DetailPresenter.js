@@ -8,6 +8,19 @@ const Container =styled.div`
     padding:10px;
     width:95vw;
     height:95vh;
+    @keyframes visualLeftToRight{
+        0%{
+         transform:translateX(-100%);
+         opacity:0.5;
+        }
+        100%{
+            transform:translateY(0%);
+        }
+    }
+  
+
+    animation:${props=>props.planner ? "" : "visualLeftToRight 1s linear"};
+
     text-align:center;
     display:${props => props.planner ? "none" :"grid"};
     justify-items:center;
@@ -35,6 +48,7 @@ const Container =styled.div`
         height:50vh;
        
     }
+    
 `;
 
 const Navigator = styled.div`
@@ -45,16 +59,29 @@ const Navigator = styled.div`
     font-size:30px;
     margin-bottom:5px;
     cursor:pointer;
+    color:white;
 
 `;
 
 const Planner =styled.div`
+    @keyframes visualLeftToRight{
+        0%{
+            transform:translateX(-100%);
+            opacity:0.5;
+        }
+        100%{
+            transform:translateX(0%);
+            opacity:1;
+        }
+    }
+    
+    animation: ${props =>props.planner ? "visualLeftToRight 1s linear" : ""};
     display: ${props => props.planner ? "block" :"none"};
 `;
 
 
 
-const DetailPresenter=({data,loading,error,planner,planList,handleClick,handleSubmit,handleDelClik})=>
+const DetailPresenter=({data,loading,error,planner,planList,handleClick,handleSubmit,handleDelClick})=>
 loading ? 
     <Loader/>:
     <>
@@ -71,7 +98,7 @@ loading ?
         <Navigator onClick={handleClick}>Go to Planner</Navigator>
     </Container>
     <Planner planner={planner}>
-        <ToDo submit={handleSubmit} click={handleDelClik} planList={planList}></ToDo>
+        <ToDo submit={handleSubmit} click={handleDelClick} planList={planList}></ToDo>
         <Navigator onClick={handleClick}>Go to Picture</Navigator>
     </Planner>
     </>    
@@ -84,7 +111,7 @@ DetailPresenter.propTypes={
     planList:PropTypes.object,
     handleClick:PropTypes.func,
     handleSubmit:PropTypes.func,
-    handleDelClik:PropTypes.func,
+    handleDelClick:PropTypes.func,
   
 }
 

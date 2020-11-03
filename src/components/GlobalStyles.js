@@ -13,6 +13,7 @@ const GlobalStyles = createGlobalStyle`
    body{
         width:100vw;
         height:100vh;
+        background-color:rgba(20,20,20,0.7); 
    }
 `;
 

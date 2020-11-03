@@ -5,13 +5,18 @@ import Day from "../../components/Day";
 import { getImages } from "../../api";
 
 
-const Container = styled.div``; // 전체 감싸는 상자.
+const Container = styled.div`
+   
+    padding:100px;
+    padding-top:20px;
+`; // 전체 감싸는 상자.
 
 const Header = styled.ul`
     list-style:none;
+    margin-bottom:20px;
 `; // 날짜셋팅 - 연도, 달, 일 세팅창
 const Wrapper = styled.div`
-    width:200px;
+    width:300px;
     margin: 0 auto;
     display:flex;
     justify-content:space-between;
@@ -37,18 +42,31 @@ const Month = styled.li`
     font-size:20px;
     }`;
 
+const ImportDay = styled.div`
+display:flex;
+justify-content:center;
+align-items:center;
+text-align:center;
+border:2px solid #ff7979;
+padding:5px;
+cursor:pointer;
+color:white;
+`;
+
+
 const Navigator=styled.div`
     width:100%;
     display:grid;
     grid-template-columns:repeat(7,1fr);
     justify-items:center;
     margin-bottom:20px;
-    font-size:18px;
-    color:#fa983a;
+    font-size:20px;
+    font-weight:600;
+    color:white;
 `;
 const GridWrapper = styled.div`
     width:100%;
-    height:100vh;
+    height:85vh;
     display:grid;
     grid-template-columns:repeat(7,1fr);
     gap:5px;
@@ -57,7 +75,7 @@ const GridWrapper = styled.div`
 
 
 
-const Homepresenter =({year,month,day,yearArray,monthArray,dayArray,startIndex,handleChange})=> 
+const Homepresenter =({year,month,day,yearArray,monthArray,dayArray,startIndex,importBtn,handleChange,handleLocalStorage,handleImportant})=> 
 <Container>
     <Header>
         <Wrapper>
@@ -76,6 +94,9 @@ const Homepresenter =({year,month,day,yearArray,monthArray,dayArray,startIndex,h
                     <option value={Amonth}>{Amonth}</option>)}
                 </select>
             </Month>
+            <ImportDay onClick={handleImportant}>
+                중요날짜 선택<br/> OFF        
+            </ImportDay>
         </Wrapper>
     </Header>
     <Navigator>
@@ -89,7 +110,7 @@ const Homepresenter =({year,month,day,yearArray,monthArray,dayArray,startIndex,h
     </Navigator>
    
     <GridWrapper>
-       {dayArray.map( (item,index)=> <Day apiKey={index >=startIndex && index<=startIndex+day-1 ? `${year}-${month}-${item}`:""}  day={item} color={index >=startIndex && index<=startIndex+day-1 ? "true" :"false"}></Day>)}                 
+       {dayArray.map( (item,index)=> <Day apiKey={index >=startIndex && index<=startIndex+day-1 ? `${year}-${month}-${item}`:""}  day={item} color={index >=startIndex && index<=startIndex+day-1 ? "true" :"false"} handleLocal={handleLocalStorage}></Day>)}                 
     </GridWrapper>
 </Container>
 
@@ -101,7 +122,10 @@ Homepresenter.propTypes={
     monthArray:PropTypes.array,
     dayArray:PropTypes.array,
     startIndex:PropTypes.number,
+    importBtn:PropTypes.number,
     handleChange:PropTypes.func,
+    handleLocalStorage:PropTypes.func,
+    handleImportant:PropTypes.func
 }
 
 

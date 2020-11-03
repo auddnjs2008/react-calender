@@ -13,7 +13,29 @@ export default class extends React.Component{
         monthArray:[1,2,3,4,5,6,7,8,9,10,11,12],
         dayArray:[],
         startIndex:null,
+        importBtn:0
     }
+
+    handleImportant=(e)=>{
+        const {importBtn}=this.state;
+        if(importBtn === 0){
+          e.target.innerHTML="중요날짜 선택<br/>ON";
+          this.setState({importBtn:1});  
+          console.log(importBtn);
+        }else{
+            e.target.innerHTML="중요날짜 선택<br/>OFF";
+            this.setState({importBtn:0});
+          console.log(importBtn);
+
+        }
+    }
+
+
+    handleLocalStorage=(key)=>{
+        const list = localStorage.getItem(key);
+        return list ? list.split(",") : [];
+    }
+
 
     
     calculateDay=(year,month)=>{
@@ -65,14 +87,14 @@ export default class extends React.Component{
         // console.log(this.state.year, this.state.month);
         // console.log(this.state.dayArray.length);
         // console.log( this.state.startIndex);
+        console.log("업데이트후",this.state.importBtn)
     }
 
      componentDidMount(){
         //마지막 날짜 구하기 
         const{ year,month,day,yearArray,dayArray,startIndex}=this.state;
         const newStartIndex=new Date(year,month-1,1).getDay();
-
-        
+            
         const lastDay=new Date(year,month,0).getDate();
         
         // 이번달의 1일이 목요일부터 시작하면
@@ -117,7 +139,8 @@ export default class extends React.Component{
 
 
     render(){
-        const {year,month,day,yearArray,monthArray,dayArray,startIndex}=this.state;
+        const {year,month,day,yearArray,monthArray,dayArray,startIndex,importBtn}=this.state;
+        console.log("render",this.state.importBtn);
         return <HomePresenter
         year={year}
         month={month}
@@ -126,7 +149,10 @@ export default class extends React.Component{
         monthArray={monthArray}
         dayArray={dayArray}
         startIndex={startIndex}
+        importBtn={importBtn}
         handleChange={this.handleChange}
+        handleLocalStorage={this.handleLocalStorage}
+        handleImportant={this.handleImportant}
         ></HomePresenter>
     }
 

@@ -24,7 +24,8 @@ export default class extends React.Component{
     }
     componentDidUpdate(){
         Key =window.location.href.split("/#/")[1];
-        localStorage.setItem(Key,this.state.planList);
+        if(this.state.planList.length !==0)
+            localStorage.setItem(Key,this.state.planList);
       
     }
 

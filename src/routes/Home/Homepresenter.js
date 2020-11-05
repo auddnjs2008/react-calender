@@ -95,8 +95,9 @@ const Homepresenter =({year,month,day,yearArray,monthArray,dayArray,startIndex,i
                 </select>
             </Month>
             <ImportDay onClick={handleImportant}>
-                중요날짜 선택<br/> OFF        
+                중요날짜 선택<br/> OFF
             </ImportDay>
+                      
         </Wrapper>
     </Header>
     <Navigator>
@@ -110,7 +111,7 @@ const Homepresenter =({year,month,day,yearArray,monthArray,dayArray,startIndex,i
     </Navigator>
    
     <GridWrapper>
-       {dayArray.map( (item,index)=> <Day apiKey={index >=startIndex && index<=startIndex+day-1 ? `${year}-${month}-${item}`:""}  day={item} color={index >=startIndex && index<=startIndex+day-1 ? "true" :"false"} handleLocal={handleLocalStorage}></Day>)}                 
+       {dayArray.map( (item,index)=> <Day importDay={importBtn} apiKey={index >=startIndex && index<=startIndex+day-1 ? `${year}-${month}-${item}`:""}  day={item} color={index >=startIndex && index<=startIndex+day-1 ? "true" :"false"} handleLocal={handleLocalStorage}></Day>)}                 
     </GridWrapper>
 </Container>
 

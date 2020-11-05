@@ -32,7 +32,7 @@ export default class extends React.Component{
 
 
     handleLocalStorage=(key)=>{
-        const list = localStorage.getItem(key);
+        const list = (localStorage.getItem(key));
         return list ? list.split(",") : [];
     }
 
@@ -87,7 +87,7 @@ export default class extends React.Component{
         // console.log(this.state.year, this.state.month);
         // console.log(this.state.dayArray.length);
         // console.log( this.state.startIndex);
-        console.log("업데이트후",this.state.importBtn)
+        //console.log("업데이트후",this.state.importBtn)
     }
 
      componentDidMount(){
@@ -140,7 +140,7 @@ export default class extends React.Component{
 
     render(){
         const {year,month,day,yearArray,monthArray,dayArray,startIndex,importBtn}=this.state;
-        console.log("render",this.state.importBtn);
+        //console.log("render",this.state.importBtn);
         return <HomePresenter
         year={year}
         month={month}

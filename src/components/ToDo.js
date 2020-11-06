@@ -50,7 +50,10 @@ const Ul=styled.ul`
             transform:translateX(0);
         }
     }
+    span.noPlan{
+        font-size:30px;
 
+    }
     li{
         font-size:25px;
         color:white;
@@ -109,7 +112,7 @@ const ToDo=({submit,click,planList})=> <Container>
     <Ul>
         {planList && planList.length !==0 ? 
             planList.map((item,index) => <li><span>{index+1}.</span> {item} <button onClick={click}>❌</button></li>)
-            :<span>There is no Plans</span>        
+            :<span className="noPlan">There is no Plans</span>        
         }
     </Ul>
     <ImageWrapper></ImageWrapper>

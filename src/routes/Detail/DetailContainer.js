@@ -26,13 +26,16 @@ export default class extends React.Component{
         Key =window.location.href.split("/#/")[1];
         if(this.state.planList.length !==0)
             localStorage.setItem(Key,this.state.planList);
-      
+        else
+            localStorage.removeItem(Key);
     }
 
     handleDelClick =(e)=>{
         const{parentNode:{innerText}} =e.target;
+        console.log(innerText);
         const number=parseInt(innerText.split(".")[0]);
         const newPlans = this.state.planList.filter((item,index)=>index !== number-1);
+        console.log(newPlans);
         this.setState({planList:newPlans});        
     }
 
@@ -47,12 +50,25 @@ export default class extends React.Component{
    
     async componentDidMount(){
         const Key =window.location.href.split("/#/")[1];
-
+        const KeyArray =Key.split("-");
+        const Day = new Date();
+        const nowYear = Day.getFullYear();
+        const nowMonth = Day.getMonth()+1;
+        const nowDay = Day.getDay();
+        let IsSearch = true;
+        if( nowYear === parseInt(KeyArray[0]))
+            IsSearch =nowMonth >=parseInt(KeyArray[1]) && nowDay >=parseInt(KeyArray[2]);
         try{
-            const {data} = await getImages.images(Key);
+            let newData;    
+            if(IsSearch){
+                const {data} = await getImages.images(Key);
+                newData=data;
+            }else
+                 newData=null;
+
             const plans = localStorage.getItem(Key) ? localStorage.getItem(Key).split(",") : [];
-            
-            this.setState({data:data,planList:(plans)});
+               
+            this.setState({data:newData,planList:(plans)});
 
         }catch(error){
             this.setState({error:"Can't find Image"})
@@ -63,7 +79,7 @@ export default class extends React.Component{
 
     render(){
         const {data,loading,error,planner,planList}=this.state
-        
+      
         return <DetailPresenter
             data={data}
             loading={loading}

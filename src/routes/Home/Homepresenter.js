@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 import Day from "../../components/Day";
+import Nasa from "../../../src/Nasa.jpg";
 import { getImages } from "../../api";
 
 
@@ -12,15 +13,25 @@ const Container = styled.div`
 `; // 전체 감싸는 상자.
 
 const Header = styled.ul`
+
     list-style:none;
     margin-bottom:20px;
 `; // 날짜셋팅 - 연도, 달, 일 세팅창
 const Wrapper = styled.div`
-    width:300px;
+    
+    width:100%;
     margin: 0 auto;
-    display:flex;
-    justify-content:space-between;
+    display:grid;
+    grid-template-columns:2fr 1fr;
+    justify-items:center;
 `;
+
+const SettingWrapper = styled.div`
+    display:flex;
+    justify-content:flex-start;
+    justify-self:start;
+`;
+
 const Year = styled.li`
     select{
     border:none;
@@ -29,6 +40,7 @@ const Year = styled.li`
     width:80px;
     height:50px;
     font-size:20px;
+    margin-right:10px;
     }
 
 `;
@@ -40,6 +52,9 @@ const Month = styled.li`
     width:80px;
     height:50px;
     font-size:20px;
+    margin-right:10px;
+    
+
     }`;
 
 const ImportDay = styled.div`
@@ -48,6 +63,7 @@ justify-content:center;
 align-items:center;
 text-align:center;
 border:2px solid #ff7979;
+width:200px;
 padding:5px;
 cursor:pointer;
 color:white;
@@ -73,12 +89,30 @@ const GridWrapper = styled.div`
 
 `; //달력을 나타내는 곳
 
+const Brander = styled.div`
+    
+    display:flex;
+    align-items:center;
+    margin-left:50px;
+    img{
+        width:70px;
+        height:70px;
+        object-fit:cover;
+        border-radius:50%;
+        margin-right:10px;
+    }
+    span{
+        color:white;
+        font-size:20px;
+    }
+`;
 
 
 const Homepresenter =({year,month,day,yearArray,monthArray,dayArray,startIndex,importBtn,handleChange,handleLocalStorage,handleImportant})=> 
 <Container>
     <Header>
         <Wrapper>
+            <SettingWrapper>
             <Year>
                 <select name="year" onChange={handleChange}>
                     {yearArray.map(Ayear=>
@@ -97,7 +131,11 @@ const Homepresenter =({year,month,day,yearArray,monthArray,dayArray,startIndex,i
             <ImportDay onClick={handleImportant}>
                 중요날짜 선택<br/> OFF
             </ImportDay>
-                      
+            </SettingWrapper>
+             <Brander>
+                   <img src={Nasa}/>
+                   <span>Nasa Calender</span>     
+             </Brander>             
         </Wrapper>
     </Header>
     <Navigator>

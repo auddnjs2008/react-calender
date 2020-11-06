@@ -3,6 +3,8 @@ import styled from "styled-components";
 import PropTypes from "prop-types";
 import Loader from "../../components/Loader";
 import ToDo from "../../components/ToDo";
+import Face from "../../../src/우는얼굴.png";
+
 const Container =styled.div`
     position:relative;
     padding:10px;
@@ -48,6 +50,35 @@ const Container =styled.div`
         height:50vh;
        
     }
+    .noInfo{
+        border:5px solid red;
+        width:30vw;
+        height:30vh;
+    }
+    .noImage{
+        border:5px solid red;
+        width:30vw;
+        height:30vh;
+    }
+    .noInfo,.noImage{
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        font-size:30px;
+    }
+
+
+    .face{
+        position:absolute;
+        top:30px;
+        background-image:url(${Face});
+        background-size:cover;
+        width:400px;
+        height:400px;
+        background-color:#ffbe76;
+        z-index:-1;
+
+    }
     
 `;
 
@@ -87,14 +118,15 @@ loading ?
     <>
     <Container planner={planner}>
         {data && data.url?   
-            (data.media_type === "video" ? <iframe src={data.url}controls="controls" allow="autoPlay"></iframe>:<img src={data.url}/>) : <div>No Images</div>     
+            (data.media_type === "video" ? <iframe src={data.url}controls="controls" allow="autoPlay"></iframe>:<img src={data.url}/>) : <div className="noImage">No Images</div>     
         }
         {data && data.url?
             <div className="Wrapper">
                 <h1>{data.title}</h1>
                 <p>{data.explanation}</p>
-            </div> : <div>No Information</div>
+            </div> : <div className="noInfo">No Information</div>
         }
+        {!data ? <div className="face"></div> :""}
         <Navigator onClick={handleClick}>Go to Planner</Navigator>
     </Container>
     <Planner planner={planner}>

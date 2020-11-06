@@ -18,7 +18,7 @@ const ImageWrapper =styled.div`
     top:0;
     width:100vw;
     height:100vh;
-    background-image:url(${Background});
+    background-image:url("https://yayatube.s3-ap-northeast-1.amazonaws.com/calender/todolist.jpg");
     background-size:cover;
     background-position:center center;
     z-index:-1;

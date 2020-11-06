@@ -71,7 +71,7 @@ const Container =styled.div`
     .face{
         position:absolute;
         top:30px;
-        background-image:url(${Face});
+        background-image:url("https://yayatube.s3-ap-northeast-1.amazonaws.com/calender/%EC%9A%B0%EB%8A%94%EC%96%BC%EA%B5%B4.png");
         background-size:cover;
         width:400px;
         height:400px;

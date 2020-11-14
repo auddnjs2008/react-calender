@@ -2,7 +2,6 @@ import React, { useState,useEffect } from "react";
 import { getImages } from "../../api";
 import HomePresenter from "./Homepresenter";
 
-
 const HomeContainer =()=>{
     const Initial =new Date();
     const [year,setYear]=useState(Initial.getFullYear());

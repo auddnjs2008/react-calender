@@ -3,6 +3,7 @@ import styled from "styled-components";
 import PropTypes from "prop-types";
 import Background from "../todolist.jpg";
 
+
 const Container=styled.div`
     position:relative;
     width:100vw;
@@ -103,11 +104,13 @@ const Form = styled.form`
 
 `;
 
+
 const ToDo=({submit,click,planList})=> <Container>
     <Title>Today's  To Do List</Title>
     <Form onSubmit={submit}>
         <input type="text" placeholder="What is your plan??"/>
         <input type="submit" value="Submit"/>
+
     </Form>
     <Ul>
         {planList && planList.length !==0 ? 
@@ -124,4 +127,4 @@ ToDo.propTypes={
     planList:PropTypes.object
 }
 
-export default ToDo;
+export default  (ToDo);

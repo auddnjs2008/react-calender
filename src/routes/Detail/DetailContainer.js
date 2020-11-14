@@ -1,44 +1,55 @@
 import React, { useEffect, useState } from "react";
 import { getImages } from "../../api";
+import {connect} from "react-redux";
+import { addToDo,getKey } from "../../store";
 import DetailPresenter from "./DetailPresenter";
 
 
-const DetailContainer =()=>{
+
+const DetailContainer =({toDos,add})=>{
+
     let Key =window.location.href.split("/#/")[1];
+    
     const [ data,setData]=useState(null);
     const [ loading,setLoader] = useState(true);
     const [ error,setError] =useState(null);
     const [ planner,setPlanner] =useState(false);
     const [ planList,setPlanList] = useState([]);
+    
+    
 
     const handleSubmit = (e) =>{
         e.preventDefault();
         const plan = e.target.firstChild.value;
-        const fixedPlan = planList.typeof === "string" ? [planList]:planList;
+        const fixedPlan = planList.typeof === "string" ? [planList,plan]:[plan,...planList];
         setPlanList(fixedPlan);
+        add(plan);
         e.target.firstChild.value="";
+        setLocalStorage(fixedPlan);
     }
 
     const handleDelClick =(e)=>{
         const{parentNode:{innerText}} =e.target;
         const number=parseInt(innerText.split(".")[0]);
         const newPlans = this.state.planList.filter((item,index)=>index !== number-1);
-        setPlanList(newPlans);       
-        cleanLocalStorage();
-
+        setPlanList(newPlans);
+        setLocalStorage(newPlans);
+      
     }
 
     const handleClick=()=>{
         if (!planner) 
-            setPlanner(true);
+        {   setPlanner(true);
+            
+        }
         else
             setPlanner(false);
     }
 
-    const cleanLocalStorage = ()=>{
+    const setLocalStorage = (fixedList)=>{
         Key =window.location.href.split("/#/")[1];
-        if(planList.length !==0)
-            localStorage.setItem(Key,planList);
+        if(fixedList.length !==0)
+            localStorage.setItem(Key,fixedList);
         else
             localStorage.removeItem(Key);
     }
@@ -72,7 +83,6 @@ const DetailContainer =()=>{
     }
 
     useEffect(()=>{
-        console.log("실행");
         settingInitial();
     },[]);
 
@@ -82,14 +92,25 @@ const DetailContainer =()=>{
     loading={loading}
     error={error}
     planner={planner}
-    planList={planList}
+    planList={toDos}
     handleClick={handleClick}
     handleSubmit={handleSubmit}
     handleDelClick={handleDelClick}
     ></DetailPresenter>
 } 
 
-export default DetailContainer;
+const mapStateProps=(state,ownProps)=>{return {toDos:state}};
+
+const mapDispatchToProps = (dispatch,ownProps)=>{
+    return {
+        add:(text,Key) =>dispatch(addToDo(text))
+    }
+}
+
+
+
+
+export default connect(mapStateProps,mapDispatchToProps) (DetailContainer);
 
 // export default class extends React.Component{
 //     state={

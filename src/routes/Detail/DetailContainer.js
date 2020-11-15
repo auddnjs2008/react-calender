@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { getImages } from "../../api";
 import {connect} from "react-redux";
-import { addToDo,getKey } from "../../store";
+import { addToDo,deleteToDo } from "../../store";
 import DetailPresenter from "./DetailPresenter";
 
 
 
-const DetailContainer =({toDos,add})=>{
+const DetailContainer =({toDos,add,delBtn})=>{
 
     let Key =window.location.href.split("/#/")[1];
-    
+    toDos=localStorage.getItem(Key) ? localStorage.getItem(Key).split(",") : [];
     const [ data,setData]=useState(null);
     const [ loading,setLoader] = useState(true);
     const [ error,setError] =useState(null);
@@ -23,7 +23,7 @@ const DetailContainer =({toDos,add})=>{
         const plan = e.target.firstChild.value;
         const fixedPlan = planList.typeof === "string" ? [planList,plan]:[plan,...planList];
         setPlanList(fixedPlan);
-        add(plan);
+        add(plan,Key);
         e.target.firstChild.value="";
         setLocalStorage(fixedPlan);
     }
@@ -31,8 +31,9 @@ const DetailContainer =({toDos,add})=>{
     const handleDelClick =(e)=>{
         const{parentNode:{innerText}} =e.target;
         const number=parseInt(innerText.split(".")[0]);
-        const newPlans = this.state.planList.filter((item,index)=>index !== number-1);
+        const newPlans = planList.filter((item,index)=>index !== number-1);
         setPlanList(newPlans);
+        delBtn(number);
         setLocalStorage(newPlans);
       
     }
@@ -103,7 +104,8 @@ const mapStateProps=(state,ownProps)=>{return {toDos:state}};
 
 const mapDispatchToProps = (dispatch,ownProps)=>{
     return {
-        add:(text,Key) =>dispatch(addToDo(text))
+        add:(text,Key) =>dispatch(addToDo(text,Key)),
+        delBtn:(id) => dispatch(deleteToDo(id)),
     }
 }
 
